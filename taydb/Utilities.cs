@@ -11,29 +11,42 @@ public class Utilitaries
         { "Add Album", AddAlbumAction },
         { "Add Music", AddMusicAction},
         { "Show Albums", ShowAlbumsAction},
+        { "Show Musics", ShowMusicsAction},
+        { "Get Musics", RemoveAlbumAction},
         { "Quit", ByeAction},
     };
 
 
-    public static void AddMusicAction()
+    private static void AddMusicAction()
     {
         Console.Clear();
         Console.Beep();
+
         Console.Write("Write the name of the music: ");
         string songName = Console.ReadLine()!;
+        
         Console.Clear();
+        Console.Beep();
 
         Console.Write("Write the name of the artist: ");
         string artistName = Console.ReadLine()!;
 
+        Console.Clear();
+        Console.Beep();
+
         Console.Write("Write the name of the album: ");
         string albumName = Console.ReadLine()!;
 
+        Console.Clear();
+        Console.Beep();
+
         Console.WriteLine("Write the duration in seconds: ");
         int duration = int.Parse(Console.ReadLine()!);
+
+        AddMusic(connectionString, songName, artistName, albumName, duration);
     }
 
-    public static void AddAlbumAction()
+    private static void AddAlbumAction()
     {
         Console.Clear();
         Console.Beep();
@@ -46,40 +59,44 @@ public class Utilitaries
         AddAlbum(connectionString, albumName, artistName);
     }
 
-    public static void ShowAlbumsAction()
+    private static void ShowAlbumsAction()
     {
         Console.Clear();
         Console.Beep();
+
         GetAlbums(connectionString);
     }
 
-    public static void ShowMusicsAction()
+    private static void ShowMusicsAction()
     {
         Console.Clear();
         Console.Beep();
+
         Console.Write("Write the name of the album: ");
         string albumName = Console.ReadLine()!;
 
         GetMusics(connectionString, albumName);
     }
 
-    public static void ByeAction()
+    private static void RemoveAlbumAction()
     {
+        Console.Clear();
+        Console.Beep();
+
+        Console.Write("Write the name of the album: ");
+        string albumName = Console.ReadLine()!; 
+        RemoveAlbum(connectionString, albumName);
+    }
+
+    private static void ByeAction()
+    {
+        Console.Clear();
         Console.Beep();
         Environment.Exit(0);
     }
 
     public static void ShowMenuOptions()
     {
-        var options = new Dictionary<string, Action>
-        {
-            { "Add Album", AddAlbumAction },
-            { "Add Music", AddMusicAction},
-            { "Show Albums", ShowAlbumsAction},
-            { "Show Musics", ShowMusicsAction},
-            { "Quit", ByeAction},
-        };
-
         var optionKeys = new List<string>(options.Keys);
         int optionIndex = 0;
 
@@ -91,7 +108,7 @@ public class Utilitaries
             {
                 if (i == optionIndex)
                 {
-                    Console.Write("> ");
+                    Console.Write("* ");
                 }
                 else
                 {
