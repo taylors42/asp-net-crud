@@ -6,11 +6,20 @@ public class Utilitaries
 {
     private static string connectionString = Environment.GetEnvironmentVariable("CONNECTION_STRING")!;
 
+    private static readonly Dictionary<string, Action> options = new()
+    {
+        { "Add Album", AddAlbumAction },
+        { "Add Music", AddMusicAction},
+        { "Show Albums", ShowAlbumsAction},
+        { "Quit", ByeAction},
+    };
+
+
     public static void AddMusicAction()
     {
         Console.Clear();
         Console.Beep();
-        Console.Write("Write the name of the the music: ");
+        Console.Write("Write the name of the music: ");
         string songName = Console.ReadLine()!;
         Console.Clear();
 
@@ -44,7 +53,17 @@ public class Utilitaries
         GetAlbums(connectionString);
     }
 
-    public static void Exit()
+    public static void ShowMusicsAction()
+    {
+        Console.Clear();
+        Console.Beep();
+        Console.Write("Write the name of the album: ");
+        string albumName = Console.ReadLine()!;
+
+        GetMusics(connectionString, albumName);
+    }
+
+    public static void ByeAction()
     {
         Console.Beep();
         Environment.Exit(0);
@@ -57,7 +76,8 @@ public class Utilitaries
             { "Add Album", AddAlbumAction },
             { "Add Music", AddMusicAction},
             { "Show Albums", ShowAlbumsAction},
-            { "Quit", Exit},
+            { "Show Musics", ShowMusicsAction},
+            { "Quit", ByeAction},
         };
 
         var optionKeys = new List<string>(options.Keys);
@@ -97,8 +117,15 @@ public class Utilitaries
                     break;
 
                 case ConsoleKey.Enter:
-
                     options[optionKeys[optionIndex]].Invoke();
+                    break;
+
+                case ConsoleKey.Escape:
+                    ByeAction();
+                    break;
+                
+                case ConsoleKey.Q:
+                    ByeAction();
                     break;
 
                 default:
