@@ -3,8 +3,9 @@
 *.user
 *.pdb
 *.ilk
-packages/
-obj/
-bin/
-Debug/
-Release/
+packages
+taydb/obj/
+taydb/bin/
+Debug
+Release
+.config
